@@ -70,3 +70,51 @@ python preprocessing_student_query.py
 *   Expand the `slang_map` dictionary to cover more university terms and student dialects.
 *   Export the trained model using `joblib` or `pickle` for inference in other applications without re-training on startup.
 *   Deploy a frontend UI tool (like Streamlit or FastAPI) to make the model visually accessible.
+
+
+
+
+
+
+
+
+# 🗺️ Roadmap: Student Query Preprocessing and Intent Classification
+
+This roadmap outlines the past development phases, the current state of the project, and a strategic guide for future enhancements to elevate this tool from a local command-line script to a potentially shippable, production-ready product.
+
+---
+
+## ✅ Phase 1: Foundation and Proof of Concept (Completed)
+*   [x] Gather and inspect the foundational university/student discussion dataset.
+*   [x] Establish an initial data loading and visualization baseline.
+*   [x] Identify key features (Text, Intent Labels).
+*   [x] Build a functional NLP text cleaning pipeline (regex, lowercasing, stopword removal).
+*   [x] Basic intent prediction model using Bag of Words / Basic Vectorization.
+
+## ✅ Phase 2: Refinement and Pipeline Standardization (Completed - Current State)
+*   [x] Convert development `.ipynb` Notebooks to a standalone, standardized `.py` script.
+*   [x] Refine NLP tasks: Introduce lemmatization and dynamic slang-to-standard-English mapping.
+*   [x] Incorporate `pyspellchecker` for auto-correcting user input on inference.
+*   [x] Transition to advanced TF-IDF feature extraction (Unigrams + Bigrams).
+*   [x] Optimize classifier model using `LinearSVC` for highly dimensional text data points.
+*   [x] Create a continuous, integrated Command-Line Interface (CLI) testing loop for immediate demonstrations.
+*   [x] Graceful error handling and dataset dependency checks.
+
+---
+
+## 🚀 Phase 3: Model Persistence and Optimization (Short-term Goals)
+*   **Model Serialization:** Use `joblib` or `pickle` to save (`model.fit()`) and load both the `TfidfVectorizer` and `LinearSVC` model. This avoids retraining the model every single time the script is executed.
+*   **Hyperparameter Tuning:** Implement `GridSearchCV` to optimize the parameters (like `C`, `penalty`) of the Linear SVM.
+*   **Expanded Validation:** Introduce K-Fold Cross Validation rather than a strict 80/20 train/test split to guarantee generalization.
+*   **Expanded Vocabulary:** Expand the student `slang_map` to include global academic slang instead of focusing only on one specific university domain (e.g., generalize `uoft` to `university`).
+
+## 🌐 Phase 4: UI/UX & Interaction (Medium-term Goals)
+*   **Streamlit Dashboard:** Wrap the trained model in a simple web app using Streamlit to offer a GUI for users instead of a terminal interface.
+*   **FastAPI / Flask Backend:** Extract the model prediction code into a standalone API endpoint (`/predict`) that takes JSON queries and returns predictions and cleaned texts.
+*   **Advanced Chatbot Integration:** Shift from just identifying "Quality/Intent" towards passing the cleaned query downstream into an LLM or a rule-based system to dynamically *answer* the student.
+
+## 🧠 Phase 5: Deep Learning & State of the Art (Long-term Goals)
+*   **Word Embeddings:** Transition from TF-IDF sparse vectors to dense semantic embeddings using Word2Vec or GloVe to capture deeper contextual meanings.
+*   **Transformer Models:** Fine-tune lightweight masked models (like DistilBERT or RoBERTa) using the HuggingFace `transformers` library for state-of-the-art intent classification that thoroughly beats SVM metrics on subtle or sarcastic queries.
+*   **Data Augmentation:** Handle imbalanced "flair" classes through techniques like synthetic minority over-sampling or textual augmentation (synonym replacement).
+*   **Real-time Dataset Integration:** Pipeline API integration to scrape and append fresh queries to the dataset weekly to prevent dataset drift.
